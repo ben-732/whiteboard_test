@@ -6,6 +6,16 @@
   var colors = document.getElementsByClassName("color");
   var context = canvas.getContext("2d");
 
+  $("#clear_btn").click((e) => {
+    console.log("clearing");
+    socket.emit("clear");
+  });
+
+  function clear_canvas() {
+    console.log("clearing received");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
   var current = {
     color: "white",
   };
@@ -27,6 +37,7 @@
   }
 
   socket.on("drawing", onDrawingEvent);
+  socket.on("clear", () => clear_canvas());
 
   window.addEventListener("resize", onResize, false);
   onResize();
